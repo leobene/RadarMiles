@@ -27,6 +27,46 @@ api.add_resource(TokenRefresh, '/refresh')
 #def auth_error(err):
  #   return jsonify({'message': 'Could not authorize. Did you include a valid Authorization header?'}), 401
 
+# The following callbacks are used for customizing jwt response/error messages.
+@jwt.expired_token_loader
+def expired_token_callback():
+    return jsonify({
+        'description': 'The token has expired.',
+        'error': 'token_expired'
+    }), 401
+
+
+@jwt.invalid_token_loader
+def invalid_token_callback(error):
+    return jsonify({
+        'description': 'Signature verification failed.',
+        'error': 'invalid_token'
+    }), 401
+
+
+@jwt.unauthorized_loader
+def missing_token_callback(error):
+    return jsonify({
+        'description': 'Request does not contain an access token.',
+        'error': 'authorization_required'
+    }), 401
+
+
+@jwt.needs_fresh_token_loader
+def token_not_fresh_callback():
+    return jsonify({
+        'description': 'The token is not fresh.',
+        'error': 'fresh_token_required'
+    }), 401
+
+
+@jwt.revoked_token_loader
+def revoked_token_callback():
+    return jsonify({
+        'description': 'The token has been revoked.',
+        'error': 'token_revoked'
+    }), 401
+
 if __name__ == '__main__':
     from db import db
 
