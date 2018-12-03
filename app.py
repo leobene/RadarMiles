@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from resources.user import UserRegister, User, UserLogin
+from resources.user import UserRegister, User, UserLogin, TokenRefresh
 from resources.company import Company, CompanyList
 
 app = Flask(__name__)
@@ -21,6 +21,7 @@ api.add_resource(User, '/user/<int:user_id>')
 api.add_resource(Company, '/company/<string:name>')
 api.add_resource(CompanyList, '/companys')
 api.add_resource(UserLogin, '/login')
+api.add_resource(TokenRefresh, '/refresh')
 
 #@app.errorhandler(JWTError)
 #def auth_error(err):
