@@ -103,3 +103,10 @@ venv.bak/
 # mypy
 .mypy_cache/
 .DS_Store
+.idea/misc.xml
+.idea/modules.xml
+.idea/RadarMiles.iml
+.idea/vcs.xml
+.idea/workspace.xml
+data.db
+data.db
