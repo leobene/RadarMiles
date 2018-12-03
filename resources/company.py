@@ -1,5 +1,4 @@
 from flask_restful import Resource
-from flask_jwt import jwt_required
 from models.company import CompanyModel
 
 class Company(Resource):
