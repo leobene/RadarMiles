@@ -1,5 +1,7 @@
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required, jwt_optional, get_jwt_identity
 from models.company import CompanyModel
+
 
 class Company(Resource):
     def get(self, name):
@@ -30,6 +32,15 @@ class Company(Resource):
 
 
 class CompanyList(Resource):
+    @jwt_optional
     def get(self):
-        return {'Companhias': [company.json() for company in CompanyModel.find_all()]}
+        user_id = get_jwt_identity()
+        companys = [company.json() for company in CompanyModel.find_all()]
+        if user_id:
+            return {'Companhias': companys}, 200
+
+        return {
+            'Companhias': [company['name'] for company in companys],
+            'Message': 'More data available if you log in'
+        }
 
