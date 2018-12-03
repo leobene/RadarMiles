@@ -18,7 +18,7 @@ class UserTest(BaseTest):
         with self.app() as c:
             with self.app_context():
                 c.post('/register', data={'username': 'test', 'password': '1234'})
-                auth_request = c.post('/auth', data=json.dumps({
+                auth_request = c.post('/login', data=json.dumps({
                     'username': 'test',
                     'password': '1234'
                 }), headers={'Content-Type': 'application/json'})
